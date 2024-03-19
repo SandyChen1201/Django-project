@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %}</title>
+    <style>
+        #message {
+            color: crimson;
+        }
+
+        body {
+            background-color: blanchedalmond;
+        }
+
+        #navbar {
+            background-color: cornflowerblue;
+            padding: 12px;
+        }
+
+        #container {
+            margin: 12px;
+            text-align: center;
+        }
+
+        input {
+            color: darkred;
+            background-color: burlywood;
+        }
+
+        button {
+            margin: 12px;
+            color: blue;
+        }
+
+        .button-style {
+            color: aqua;
+        }
+    </style>
+    {% block style %}
+    {% endblock %}
+</head>
+
+<body>
+    <div id="navbar">
+        <!--共用區/繼承頁面-->
+        {% if user.is_authenticated %}
+        UserName:{{user.username}} <a href="{% url 'logout' %}">logout</a>
+        {% else %}
+        <a href="{% url 'login' %}">登入</a>
+        <a href="{% url 'register' %}">註冊</a>
+        {% endif %}
+    </div>
+    <!--自我保留內容檢視的樣板-->
+    <div id="container">
+        {% block content %}
+
+        {% endblock %}
+        <p id="message">{{message}}</p>
+    </div>
+</body>
+
+</html>
