@@ -38,7 +38,7 @@ def user_login(request):
                 if user:
                     login(request, user)
                     message = "login success"
-                    return redirect("profile")
+                    return redirect("todo")
                 else:
                     message = "user or password invalide"
     return render(request, "user/login.html", {"message": message})

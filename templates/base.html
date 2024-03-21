@@ -37,6 +37,10 @@
         .button-style {
             color: aqua;
         }
+
+        ul {
+            list-style: none;
+        }
     </style>
     {% block style %}
 
@@ -47,13 +51,16 @@
     <div id="navbar">
         <!--共用區/繼承頁面-->
         {% if user.is_authenticated %}
-        UserName:{{user.username}} <a href="{% url 'logout' %}">logout</a>
+        UserName:
+        <a href="{% url 'profile' %}">{{user.username}}</a> <a href="{% url 'logout' %}">logout</a>
+        <a href="{% url 'todo' %}">查看代辦事項</a>
         {% else %}
         <a href="{% url 'login' %}">登入頁面</a>
         <a href="{% url 'register' %}">註冊頁面</a>
         {% endif %}
     </div>
     <!--自我保留內容檢視的樣板-->
+
     <div id="container">
         {% block content %}
 
