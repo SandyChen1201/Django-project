@@ -14,3 +14,14 @@ def todo(request):
     # print(todos)
 
     return render(request, "todo/todo.html", {"todos": todos})
+
+
+def view_todo(request, id):
+    # 因為查看單一事項是唯一，所以用get
+    todo = None
+    try:
+        todo = Todo.objects.get(id=id)
+    except Exception as e:
+        print(e)
+
+    return render(request, "todo/view-todo.html", {"todo": todo})

@@ -1,0 +1,26 @@
+{% extends 'base.html'%}
+{% block title %}代辦事項{% endblock %}
+{% block style %}
+<style>
+    .todo-text {
+        background-color: rgb(228, 181, 204);
+        color: rgb(100, 18, 18);
+        font-family: Arial, "標楷體", Helvetica, sans-serif;
+        border-radius: 24px;
+        margin: 12px;
+        height: 200px;
+        padding: 12px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<h1>{{todo.title}}</h1>
+<div class="todo-text">
+    <b>
+        <h3>{{todo.text}}</h3>
+    </b><br>
+</div>
+<button type="click">已完成</button>
+<a href="{% url 'todo' %}">回前頁</a>
+{% endblock %}

@@ -34,10 +34,10 @@
 <div class="todo-list">
     <p class="date">{{todo.created}}</p>
     {{todo.date_completed}}
-    <h3 class="title"><u>{{todo.title}}</u><br>
-        {% if todo.important %}
-        <span class="important">(IMPORTANT)</span>
-        {% endif %}
+    <a href="{% url 'view_todo' todo.id %}">{{todo.title}}</a><br>
+    {% if todo.important %}
+    <span class="important">(IMPORTANT)</span>
+    {% endif %}
 
     </h3>
     <p class="todo-text">{{todo.text}}</p>
