@@ -39,6 +39,7 @@
         }
     </style>
     {% block style %}
+
     {% endblock %}
 </head>
 
@@ -48,8 +49,8 @@
         {% if user.is_authenticated %}
         UserName:{{user.username}} <a href="{% url 'logout' %}">logout</a>
         {% else %}
-        <a href="{% url 'login' %}">登入</a>
-        <a href="{% url 'register' %}">註冊</a>
+        <a href="{% url 'login' %}">登入頁面</a>
+        <a href="{% url 'register' %}">註冊頁面</a>
         {% endif %}
     </div>
     <!--自我保留內容檢視的樣板-->

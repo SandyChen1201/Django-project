@@ -16,16 +16,12 @@ Including another URLconf
 """
 
 from django.contrib import admin
+from django.urls import path
+from . import views
 
-# include是包含的意思
-from django.urls import path, include
-from app import views
-
-# 產生路由/此為最主要的分配URL
+# 產生路由/分配User次要路徑
 urlpatterns = [
-    path("admin/", admin.site.urls),
-    # path("", views.index),  原本的hello django有todo的首頁就可以不用了
-    # 分配User主要進入點
-    path("user/", include("user.urls")),
-    path("", include("todo.urls")),
+    # 為了redirect或方便查找本地網址，一定要有替代名車
+    # 空對空才會變成首頁
+    path("", views.todo, name="todo"),
 ]
