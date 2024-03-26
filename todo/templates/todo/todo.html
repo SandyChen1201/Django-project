@@ -25,11 +25,23 @@
     .important {
         color: rgb(180, 7, 7);
     }
+
+    button {
+        padding-left: 0%;
+        background-color: rgb(140, 210, 238);
+        color: white;
+    }
 </style>
 {% endblock %}
 <!--外間距是margin-->
 {% block content %}
-<h1>TodoList</h1>
+<h1>
+    {% if completed %}
+    Completed-Todo
+    {% else %}
+    TodoList
+    {% endif %}
+</h1>
 {% for todo in todos %}
 <div class="todo-list">
     <p class="date">{{todo.created}}</p>
@@ -41,6 +53,9 @@
 
     </h3>
     <p class="todo-text">{{todo.text}}</p>
+    <p>
+        <button><a href="{% url 'delete_todo' todo.id %}" onclick="return confirmDelete()">刪除</a></button>
+    </p>
 </div>
 {% endfor %}
 {% endblock %}

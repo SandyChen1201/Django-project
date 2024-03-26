@@ -2,10 +2,40 @@ from django.shortcuts import render, redirect
 from .models import Todo
 from .forms import TodoForm
 from datetime import datetime
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
 
+@login_required
+def delete_todo(request, id):
+    # get指定要的事項
+    try:
+        todo = Todo.objects.get(id=id)
+        todo.delete()
+    except Exception as e:
+        print(e)
+    return redirect("todolist")
+
+
+@login_required
+def completed_todo(request):
+    # all,get,filter
+    # todos = Todo.objects.all()
+    # order_by:排序(要排的東西)(-是降序)
+    # 確認使用者:
+    todos = None
+    completed = True
+    if request.user.is_authenticated:
+        todos = Todo.objects.filter(user=request.user, completed=True).order_by(
+            "-created"
+        )
+    # print(todos)
+    # 給前端一個變數區分
+    return render(request, "todo/todo.html", {"todos": todos, "completed": completed})
+
+
+@login_required
 def create_todo(request):  # 程式的函數或變數宣告才會用底線
     # 第一次會是GET模式
     # 因為不管是GET還是POST都要回傳FROM
@@ -39,6 +69,7 @@ def todolist(request):
     return render(request, "todo/todo.html", {"todos": todos})
 
 
+@login_required
 def view_todo(request, id):
     # 因為查看單一事項是唯一，所以用get
     todo = None
