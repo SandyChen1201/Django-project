@@ -12,7 +12,8 @@ class Todo(models.Model):
     )  # 內容物可為空，物件也可以為空
     important = models.BooleanField(default=False)
 
-    # user_id綁定todo_id   ForeignKey進行外界關聯,自動建立關聯關係
+    # user_id綁定todo_id   ForeignKey進行外界關聯,自動建立關聯關係***
+    # todo_id<=>user_id
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):

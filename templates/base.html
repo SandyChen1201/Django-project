@@ -41,6 +41,18 @@
         ul {
             list-style: none;
         }
+
+        a {
+            margin-left: 12px;
+        }
+
+        .button-style {
+            background-color: rgba(123, 223, 223, 0.925);
+            padding: 6px;
+            color: blue;
+            border-radius: 12px;
+
+        }
     </style>
     {% block style %}
 
@@ -52,8 +64,11 @@
         <!--共用區/繼承頁面-->
         {% if user.is_authenticated %}
         UserName:
-        <a href="{% url 'profile' %}">{{user.username}}</a> <a href="{% url 'logout' %}">logout</a>
-        <a href="{% url 'todo' %}">查看代辦事項</a>
+        <a href="{% url 'profile' %}">{{user.username}}</a>
+        <a href="{% url 'logout' %}">logout</a>
+        <a class="button-style" href="{% url 'todolist' %}">查看代辦事項</a>
+        <a class="button-style" href="{% url 'create_todo' %}">建立新事項</a>
+
         {% else %}
         <a href="{% url 'login' %}">登入頁面</a>
         <a href="{% url 'register' %}">註冊頁面</a>

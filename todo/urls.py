@@ -23,6 +23,7 @@ from . import views
 urlpatterns = [
     # 為了redirect或方便查找本地網址，一定要有替代名車
     # 空對空才會變成首頁
-    path("", views.todo, name="todo"),
+    path("", views.todolist, name="todolist"),
     path("todo/<int:id>", views.view_todo, name="view_todo"),
+    path("create-todo/", views.create_todo, name="create_todo"),
 ]
