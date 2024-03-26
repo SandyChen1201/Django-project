@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Todo
 from .forms import TodoForm
+from datetime import datetime
 
 # Create your views here.
 
@@ -28,10 +29,11 @@ def create_todo(request):  # 程式的函數或變數宣告才會用底線
 def todolist(request):
     # all,get,filter
     # todos = Todo.objects.all()
+    # order_by:排序(要排的東西)(-是降序)
     # 確認使用者:
     todos = None
     if request.user.is_authenticated:
-        todos = Todo.objects.filter(user=request.user)
+        todos = Todo.objects.filter(user=request.user).order_by("-created")
     # print(todos)
 
     return render(request, "todo/todo.html", {"todos": todos})
@@ -40,9 +42,32 @@ def todolist(request):
 def view_todo(request, id):
     # 因為查看單一事項是唯一，所以用get
     todo = None
+    message = ""
     try:
         todo = Todo.objects.get(id=id)
+        form = TodoForm(instance=todo)  # instance實體=單一物件)
+
+        if request.method == "POST":
+            print(request.POST)
+            if request.POST.get("update"):
+
+                if request.POST.get("completed"):
+                    todo.date_completed = datetime.now()
+                else:
+                    todo.date_completed = None
+
+                form = TodoForm(request.POST, instance=todo)
+                if form.is_valid():
+                    form.save()
+                    message = "修改成功"
+            elif request.POST.get("delete"):
+                todo.delete()
+                return redirect("todolist")
+
     except Exception as e:
         print(e)
+        message = "修改/刪除失敗"
 
-    return render(request, "todo/view-todo.html", {"todo": todo})
+    return render(
+        request, "todo/view-todo.html", {"todo": todo, "form": form, "message": message}
+    )

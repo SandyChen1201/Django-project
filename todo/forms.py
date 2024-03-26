@@ -7,4 +7,4 @@ class TodoForm(ModelForm):  # 新的網頁 新的URL 新的def方法(函式)
     class Meta:
         model = Todo
         # fields = "__all__"  # 哪些欄位需要給使用者填充(__all__ 全部都要)
-        fields = ["title", "text", "important"]
+        fields = ["title", "text", "important", "completed"]

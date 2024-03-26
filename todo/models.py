@@ -16,5 +16,8 @@ class Todo(models.Model):
     # todo_id<=>user_id
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
+    # 資料表的更新跟同步
+    completed = models.BooleanField(default=False)
+
     def __str__(self):
         return f"{self.id}-[{self.created}-{self.title}-{self.user}]"
