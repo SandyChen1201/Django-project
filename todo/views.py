@@ -7,6 +7,33 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 
+def recover_todo(request, id):
+    try:
+        todo = Todo.objects.get(id=id)
+        print(todo)
+        todo.completed = False  # completed是一個布林變數
+        todo.date_completed = None
+        todo.save()
+
+    except Exception as e:
+        print(e)
+    return redirect("todolist")
+
+
+@login_required
+def finish_todo(request, id):
+    try:
+        todo = Todo.objects.get(id=id)
+        print(todo)
+        todo.completed = True  # completed是一個布林變數
+        todo.date_completed = datetime.now()  # 要綁定完成時間
+        todo.save()
+
+    except Exception as e:
+        print(e)
+    return redirect("completed_todo")
+
+
 @login_required
 def delete_todo(request, id):
     # get指定要的事項
@@ -62,8 +89,11 @@ def todolist(request):
     # order_by:排序(要排的東西)(-是降序)
     # 確認使用者:
     todos = None
+    completed = False
     if request.user.is_authenticated:
-        todos = Todo.objects.filter(user=request.user).order_by("-created")
+        todos = Todo.objects.filter(user=request.user, completed=False).order_by(
+            "-created"
+        )
     # print(todos)
 
     return render(request, "todo/todo.html", {"todos": todos})

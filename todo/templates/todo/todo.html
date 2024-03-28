@@ -45,16 +45,24 @@
 {% for todo in todos %}
 <div class="todo-list">
     <p class="date">{{todo.created}}</p>
+    {% if todo.date_completed %}
     {{todo.date_completed}}
+    {% endif %}
     <a href="{% url 'view_todo' todo.id %}">{{todo.title}}</a><br>
     {% if todo.important %}
-    <span class="important">(IMPORTANT)</span>
+    <span class="important"><b>(IMPORTANT)</b></span>
     {% endif %}
 
     </h3>
     <p class="todo-text">{{todo.text}}</p>
     <p>
         <button><a href="{% url 'delete_todo' todo.id %}" onclick="return confirmDelete()">刪除</a></button>
+        {% if completed %}
+        <button style="background-color: rgb(235, 182, 103); color: brown;"><a href="{% url 'recover_todo' todo.id %}"
+                onclick="return confirmRecover()">恢復</a></button>
+        {% else %}
+        <button><a href="{% url 'finish_todo' todo.id %}" onclick="return confirmFinish()">完成</a></button>
+        {% endif %}
     </p>
 </div>
 {% endfor %}
